@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
+  fetchToys()
+  
   function fetchToys() {
     //step 2. use fetch() to make a Get Request to the API
     fetch('http://localhost:3000/toys')
@@ -22,12 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
       //iterate over the array of toy objects
       toys.forEach(toy => {
         //create a card for each toy abd add it to the dom
-        creatToyCard(toy)
+        createToyCard(toy)
       })
     ).catch(error => console.error('Error fecthong toys:', error))
   }
   
-  function creatToyCard(toy) {
+  function createToyCard(toy) {
     //Get the element with the ID 'toy-collection' to add the toy card to it
     const toyCollection = document.getElementById('toy-collection')
 
@@ -40,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     toyName.textContent = toy.name // Set the text content to the toy's name
 
     //create an image element for the for the toy's image
-    const toyimage = document.createElement('p')
-    toyimage.src = toy.image //set the src attribute for the image url
-    toyimage.className = 'toy-avatar'; // Add the 'toy-avatar' class to the img
+    const toyImage = document.createElement('img')
+    toyImage.src = toy.image //set the src attribute for the image url
+    toyImage.className = 'toy-avatar'; // Add the 'toy-avatar' class to the img
 
     //create a p element for the toy's likes
     const toyLikes = document.createElement('p')
@@ -56,14 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Append all the elemts (name, image, likes, buttons) to the toycard
     toyCard.appendChild(toyName)
-    toyCard.appendChild(toyimage)
+    toyCard.appendChild(toyImage)
     toyCard.appendChild(toyLikes)
     toyCard.appendChild(likeButton)
 
     //append the toy card to the toy collection
     toyCollection.appendChild(toyCard)
 
+  }
+
 
 })
 
-fetchToys();
+
