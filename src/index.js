@@ -3,6 +3,8 @@ let addToy = false;
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
+  const toyForm = document.querySelector('.add-toy-form')
+
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
     addToy = !addToy;
@@ -11,7 +13,27 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       toyFormContainer.style.display = "none";
     }
-  });
+  })
+
+   //Handle the form submission
+  toyForm.addEventListener("submit", (event)=> {
+    event.preventDefault()//prevent the default form submission
+
+  //collect the form data
+  const toyName = document.querySelector('input[name="name"]').value;
+  const toyImage = document.querySelector('input[name="image"]').value;
+
+  //create a new toy object
+  const newToy = {
+    name: toyName,
+    image: toyImage,
+    likes: 0
+  }
+  // Send the new toy to the server
+  addNewToy(newToy);
+
+  })
+
 
   fetchToys()
   
@@ -65,7 +87,28 @@ document.addEventListener("DOMContentLoaded", () => {
     toyCollection.appendChild(toyCard)
 
   }
+  
+  function increaseLikes(toy) {
+    //increase the tpy like counts
+    toy.likes += 1
 
+  }
+
+  function addNewToy(toy) {
+    fetch('http://localhost:3000/toys', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(toy)
+    })
+    .then(response => response.json())
+    .then(newToy => {
+      // Add the new toy to the DOM
+      createToyCard(newToy);
+    })
+    .catch(error => console.error('Error adding new toy:', error));
+  }
 
 })
 
