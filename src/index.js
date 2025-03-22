@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const toyName = document.querySelector('input[name="name"]').value;
   const toyImage = document.querySelector('input[name="image"]').value;
 
+  
   //create a new toy object
   const newToy = {
     name: toyName,
